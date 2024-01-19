@@ -84,13 +84,13 @@
     <div id="resultado">
         {% if dados %}
             <p>{{ dados.title }}</p>
-            <p>{{ dados.thumbnail_url }}</p>
+            <!--<p>{{ dados.thumbnail_url }}</p>-->
             <form action="/converter_mp3" method="post">
                 <button type="submit">Converter para MP3</button>
             </form>
-            <form action="/converter_mp4" method="post">
+            <!--<form action="/converter_mp4" method="post">
                 <button type="submit">Converter para MP4</button>
-            </form>
+            </form>-->
         {% else %}
             
         {% endif %}

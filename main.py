@@ -64,6 +64,10 @@ def converter_mp3():
 
         return send_file(out_file, as_attachment=True, download_name=filename)
         #metodo funcionando corretamente
+        # no servidor executa o seguinte erro Internal Server Error
+        #The server encountered an internal error and was unable to complete your request. 
+        #Either the server is overloaded or there is an error in the application.
+        #urllib.error.HTTPError: HTTP Error 429: Too Many Requests
     else:
         return redirect(url_for('index'))
     
