@@ -88,20 +88,3 @@ def converter_mp4():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-'''
-def definir_permissao_pasta(caminho_pasta, permissao):
-    # O argumento 'permissao' deve ser uma string representando as permissões desejadas, por exemplo, '755'
-    try:
-        os.chmod(caminho_pasta, int(permissao, 8))
-        print(f'Permissões da pasta {caminho_pasta} alteradas para {permissao}')
-    except OSError as e:
-        print(f"Erro ao definir permissões: {e}")
-
-# Exemplo de uso
-caminho_minha_pasta = '/caminho/da/minha/pasta'
-permissao_desejada = '755'  # Permissões padrão para uma pasta típica
-
-definir_permissao_pasta(caminho_minha_pasta, permissao_desejada)
-'''
