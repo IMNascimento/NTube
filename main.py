@@ -75,7 +75,7 @@ def converter_mp4():
         audio_download = yt.streams.get_highest_resolution()
         filename = yt.title+".mp4"
         audio_download.download(filename)
-        definir_permissao_pasta(filename, '755')
+        #definir_permissao_pasta(filename, '755')
         return send_file(filename, as_attachment=True, download_name=filename)
         #termina de realizar o download ele so está fazendo download no servidor e não no cliente
         # erro : PermissionError: [Errno 13] Permission denied: 'C:\\xampp\\htdocs\\python\\NTube\\Super Mario World Game Over LoFi Hip Hop Remix.mp4'
