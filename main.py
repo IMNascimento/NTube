@@ -12,16 +12,6 @@ senha_correta = "igor"
 senha = None
 url = None
 
-def definir_permissao_pasta(caminho_pasta, permissao):
-    # O argumento 'permissao' deve ser uma string representando as permissões desejadas, por exemplo, '755'
-    try:
-        os.chmod(caminho_pasta, int(permissao, 8))
-        print(f'Permissões da pasta {caminho_pasta} alteradas para {permissao}')
-    except OSError as e:
-        print(f"Erro ao definir permissões: {e}")
-
-
-
 def verifica_senha():
     if senha == senha_correta:
         return True
@@ -63,11 +53,6 @@ def converter_mp3():
         out_file = audio_download.download(filename)
 
         return send_file(out_file, as_attachment=True, download_name=filename)
-        #metodo funcionando corretamente
-        # no servidor executa o seguinte erro Internal Server Error
-        #The server encountered an internal error and was unable to complete your request. 
-        #Either the server is overloaded or there is an error in the application.
-        #urllib.error.HTTPError: HTTP Error 429: Too Many Requests
     else:
         return redirect(url_for('index'))
     
@@ -77,12 +62,10 @@ def converter_mp4():
         global url
         yt = YouTube(str(url).strip())
         audio_download = yt.streams.get_highest_resolution()
-        filename = yt.title+".mp4"
+        filename = yt.title
         audio_download.download(filename)
-        #definir_permissao_pasta(filename, '755')
-        return send_file(filename, as_attachment=True, download_name=filename)
-        #termina de realizar o download ele so está fazendo download no servidor e não no cliente
-        # erro : PermissionError: [Errno 13] Permission denied: 'C:\\xampp\\htdocs\\python\\NTube\\Super Mario World Game Over LoFi Hip Hop Remix.mp4'
+        arquivo = filename+"//"+filename+".mp4"
+        return send_file(arquivo, as_attachment=True, download_name=arquivo)
     else:
         return redirect(url_for('index'))
 
