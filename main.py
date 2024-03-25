@@ -1,3 +1,4 @@
+import datetime
 import os
 from flask import Flask, render_template, request, redirect, url_for, send_file
 from urllib.request import urlretrieve
@@ -7,45 +8,51 @@ from pytube import YouTube
 
 app = Flask(__name__)
 
-# Senha para autenticação
-senha_correta = "igor"
-senha = None
-url = None
-
-def verifica_senha():
-    if senha == senha_correta:
-        return True
-    else:
-        return False
-    
 
 @app.route('/')
 def index():
-    return render_template('login.html')
-
-@app.route('/conversor', methods=['POST'])
-def conversor():
-    global senha
-    senha = request.form.get('senha')
-    if verifica_senha():
+    try:
+        ip = request.remote_addr
+        port = request.environ.get('REMOTE_PORT')
+        with open('visit.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[INDEX] [{timestamp}] Acesso de {ip}:{port}\n')
         return render_template('conversor.html')
-    else:
-        return redirect(url_for('index'))
+    except Exception as e:
+        with open('log.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[ERRO] [{timestamp}] Ocorreu um erro: {str(e)}\n')
+        return render_template('500.html')
 
 @app.route('/converter', methods=['POST'])
 def converter():
-    if verifica_senha():
+    try:
+        ip = request.remote_addr
+        port = request.environ.get('REMOTE_PORT')
+        with open('visit.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[CONVERTER] [{timestamp}] Acesso de {ip}:{port}\n')
         global url
         url = request.form.get('inputURL')
         yt = YouTube(str(request.form.get('inputURL')).strip())
         return render_template('conversor.html', dados=yt)
-    else:
-        return redirect(url_for('index'))
-# tem que verificar a possibilidade de usar a imagem não esta utilizando para não sobrecarrergar o servidor
+    except Exception as e:
+        with open('log.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[ERRO] [{timestamp}] Ocorreu um erro: {str(e)}\n')
+        return render_template('500.html')
+
+
     
 @app.route('/converter_mp3', methods=['POST'])
 def converter_mp3():
-    if verifica_senha():
+    try:
+        ip = request.remote_addr
+        port = request.environ.get('REMOTE_PORT')
+        with open('visit.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[CONVERTER_MP3] [{timestamp}] Acesso de {ip}:{port}\n')
+
         global url
         yt = YouTube(str(url).strip())
         audio_download = yt.streams.filter(only_audio=True).first()
@@ -53,12 +60,22 @@ def converter_mp3():
         out_file = audio_download.download(filename)
 
         return send_file(out_file, as_attachment=True, download_name=filename)
-    else:
-        return redirect(url_for('index'))
+    except Exception as e:
+        with open('log.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[ERRO] [{timestamp}] Ocorreu um erro: {str(e)}\n')
+        return render_template('500.html')
     
+
 @app.route('/converter_mp4', methods=['POST'])
 def converter_mp4():
-    if verifica_senha():
+    try:
+        ip = request.remote_addr
+        port = request.environ.get('REMOTE_PORT')
+        with open('visit.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[CONVERTER_MP4] [{timestamp}] Acesso de {ip}:{port}\n')
+
         global url
         yt = YouTube(str(url).strip())
         audio_download = yt.streams.get_highest_resolution()
@@ -66,12 +83,15 @@ def converter_mp4():
         audio_download.download(filename)
         arquivo = filename+"//"+filename+".mp4"
         return send_file(arquivo, as_attachment=True, download_name=arquivo)
-    else:
-        return redirect(url_for('index'))
+    except Exception as e:
+        with open('log.txt', 'a') as f:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f'[ERRO] [{timestamp}] Ocorreu um erro: {str(e)}\n')
+        return render_template('500.html')
 
 
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

@@ -7,7 +7,7 @@
     <title>ntube - Conversor de Vídeo do YouTube Gratuito</title>
     <meta name="description" content="Converta vídeos do YouTube para MP3 ou MP4 gratuitamente. Rápido, fácil e sem necessidade de cadastro. Experimente o nosso conversor de vídeo agora.">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/path/to/your/favicon.png"/> <!-- Adicione o caminho correto do favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='./assets/img/logo1.png') }}"/> <!-- Adicione o caminho correto do favicon -->
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -25,9 +25,21 @@
             margin: 20px 0;
         }
 
+        #form {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px 0 rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Adiciona espaço entre os elementos do formulário */
+        }
+
         form {
             background-color: #FFFFFF;
-            padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 6px 0 rgba(0,0,0,0.1);
             width: 100%;
@@ -65,6 +77,13 @@
             letter-spacing: 0.5px;
             transition: background-color 0.2s;
         }
+        .blue {
+            background-color: #57a7e7;
+        }
+
+        .yellow {
+            background-color: #a77d01;
+        }
 
         button:hover {
             background-color: #43A047;
@@ -87,12 +106,32 @@
             margin: 20px 0;
             border-radius: 8px;
         }
+
+        .section-educational {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px 0 rgba(0,0,0,0.1);
+            margin: 20px 0;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            background-color: #202124;
+            color: #FFFFFF;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Bem-vindo ao NTube - Seu Conversor de Vídeo do YouTube</h1>
 
-    <form action="/converter" method="post">
+    <form id="form" action="/converter" method="post">
         <label for="inputURL">Insira a URL do vídeo:</label>
         <input type="text" id="inputURL" name="inputURL" placeholder="Exemplo: https://youtube.com/watch?v=example" required>
         <button type="submit">Buscar</button>
@@ -100,14 +139,13 @@
     <div id="resultado">
         {% if dados %}
             <p><strong>Título:</strong> {{ dados.title }}</p>
-            <!-- Opcional: Mostrar miniatura -->
-            <img src="{{ dados.thumbnail_url }}" alt="Miniatura" style="max-width: 100%; height: auto;">
+            <img src="{{ dados.thumbnail_url }}" alt="Miniatura ntube conversor" style="max-width: 100%; height: auto;">
             <form action="/converter_mp3" method="post">
                 <input type="hidden" name="videoUrl" value="{{ dados.url }}">
-                <button type="submit">Converter para MP3</button>
+                <button type="submit" class="blue">Converter para MP3</button>
             </form>
             <form action="/converter_mp4" method="post">
-                <button type="submit">Converter para MP4</button>
+                <button type="submit" class="yellow">Converter para MP4</button>
             </form>
         {% else %}
             <!-- O resultado da busca ou conversão será exibido aqui -->
@@ -117,7 +155,19 @@
         <!-- Insira o código do anúncio do Google aqui -->
         Espaço para Anúncio
     </div>
-
+     <!-- Seção educacional -->
+     <div class="section-educational">
+        <h2>Nota Importante</h2>
+        <p>Este projeto é criado apenas para fins educacionais e não deve ser usado para violar quaisquer termos de serviço do YouTube. Por favor, use com responsabilidade.</p>
+    </div>
+    <div class="section-educational">
+        <h2>Abuso e violações</h2>
+        <p>Em caso de utilizar para violar quaisquer termos de serviço do YouTube. Os desenvolvedores não assumiram qualquer problema, sendo de total responsabilidade do usuário.</p>
+    </div>
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 NTube - Todos os direitos reservados</p>
+    </footer>
     
 </body>
 </html>
