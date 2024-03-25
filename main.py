@@ -57,7 +57,7 @@ def converter_mp3():
         yt = YouTube(str(url).strip())
         audio_download = yt.streams.filter(only_audio=True).first()
         filename = yt.title+".mp3"
-        out_file = audio_download.download(filename)
+        out_file = audio_download.download(output_path="download", filename=filename)
 
         return send_file(out_file, as_attachment=True, download_name=filename)
     except Exception as e:
@@ -75,20 +75,18 @@ def converter_mp4():
         with open('visit.txt', 'a') as f:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             f.write(f'[CONVERTER_MP4] [{timestamp}] Acesso de {ip}:{port}\n')
-
         global url
         yt = YouTube(str(url).strip())
         audio_download = yt.streams.get_highest_resolution()
-        filename = yt.title
-        audio_download.download(filename)
-        arquivo = filename+"//"+filename+".mp4"
-        return send_file(arquivo, as_attachment=True, download_name=arquivo)
+        filename = yt.title + ".mp4"
+        out_file = audio_download.download(output_path="download", filename=filename)
+        # Corrigindo o caminho do arquivo para enviar corretamente
+        return send_file(os.path.join("download", filename), as_attachment=True, download_name=filename)
     except Exception as e:
         with open('log.txt', 'a') as f:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             f.write(f'[ERRO] [{timestamp}] Ocorreu um erro: {str(e)}\n')
         return render_template('500.html')
-
 
 
 
