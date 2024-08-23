@@ -2,7 +2,7 @@ import datetime
 import os
 from flask import Flask, render_template, request, redirect, url_for, send_file
 from urllib.request import urlretrieve
-from pytube import YouTube
+from core.ntube import YouTube
 
 
 
