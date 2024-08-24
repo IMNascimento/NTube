@@ -1,8 +1,8 @@
 <h1 align="center">
   <br>
-  <a href="#"><img src="https://github.com/IMNascimento/DVR/assets/28989407/84028706-5a9e-4d00-af2c-2935e5604035" alt="Nascimento" width="200"></a>
+  <a href="#"><img src="https://github.com/user-attachments/assets/47be0af7-df9a-42b0-8fc5-5e55050bae4f" alt="ntube" width="200"></a>
   <br>
-  Nascimento
+  Ntube
   <br>
 </h1>
 
@@ -18,6 +18,8 @@ NTube é uma aplicação Python Flask que permite converter vídeos do YouTube e
 - Sem necessidade de cadastro
 
 ## Como usar
+
+0. Instale a versão 3.10 python ou até a 3.12 foi testado a aplicação.
 
 1. Clone este repositório para o seu ambiente local:
 
